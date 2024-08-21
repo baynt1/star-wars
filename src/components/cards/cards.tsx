@@ -12,14 +12,16 @@ interface ICardsProps {
   home: string
   gender: string
   id: string
+  isFavorite: boolean
 }
 
-export const Cards: FC<ICardsProps> = ({ title, home, gender, id }) => {
+export const Cards: FC<ICardsProps> = ({ title, home, gender, id, isFavorite }) => {
   const { addToFavorite, favorites } = useCards()
   const router = useRouter()
+
   return (
     <div
-      className='rounded-lg p-4 bg-blue-500 flex flex-col cursor-pointer'
+      className={`rounded-lg p-4 bg-blue-500 flex flex-col cursor-pointer ${isFavorite && !favorites.includes(id) && 'hidden'}`}
       onClick={() => router.push(`/person/${id}`)}
     >
       <div className={'flex gap-1 items-center justify-between'}>
@@ -30,7 +32,8 @@ export const Cards: FC<ICardsProps> = ({ title, home, gender, id }) => {
           {title}
         </h5>
         <div
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation()
             addToFavorite(id)
           }}
         >

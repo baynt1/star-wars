@@ -9,7 +9,15 @@ export const Search: FC<ISearchProps> = ({ ...rest }) => {
   const router = useRouter()
 
   const handleSearch = (str: string) => {
-    str ? router.push(`?search=${str}`) : router.push('/')
+    const params = new URLSearchParams(window.location.search)
+
+    if (str) {
+      params.set('search', str)
+    } else {
+      params.delete('search')
+    }
+
+    router.push(`?${params.toString()}`)
   }
 
   return (

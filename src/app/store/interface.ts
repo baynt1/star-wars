@@ -15,7 +15,6 @@ export interface ICards {
 }
 
 export interface IStoreCards {
-  cards: ICards[]
   fetchCards: () => Promise<ICards[]>
   addToFavorite: (fav: string) => void
   favorites: string[]

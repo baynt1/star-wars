@@ -42,7 +42,6 @@ export const useCards = create<IStoreCards>(
   devtools(
     persist(
       (set, get) => ({
-        cards: [],
         favorites: [],
         addToFavorite: (fav: string) => {
           set((state) => ({
@@ -55,10 +54,6 @@ export const useCards = create<IStoreCards>(
         fetchCards: async () => {
           try {
             const data: ICardsResponse = await new GraphQLClient(api).request(query)
-            set((state) => ({
-              ...state,
-              cards: data.allPeople.people,
-            }))
             return data.allPeople.people
           } catch (error) {
             console.error('Error fetching cards:', error)
