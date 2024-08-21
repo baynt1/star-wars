@@ -1,19 +1,34 @@
-import { Button } from '@/components/button'
-import { Search } from '@/components/search'
+import { Cards } from '@/components/cards'
+import { useCards } from '@/app/store/store'
+import { Header } from '@/components/header'
 
-export default function Home() {
+export default async function Home({ searchParams }) {
+  const { fetchCards, favorites } = useCards.getState()
+
+  const data = await fetchCards()
+
   return (
     <>
-      <div className={'flex justify-between items-center'}>
-        <div className={'flex gap-2 w-fit'}>
-          <Button>Все</Button>
-          <Button>Избранные</Button>
-        </div>
+      <Header />
 
-        <Search />
+      <div className={'grid grid-cols-5 gap-4 mt-4 overflow-auto max-h-cards'}>
+        {data
+          .filter((item) => (searchParams.favorite ? favorites.includes(item.id) : item))
+          .filter((item) =>
+            searchParams.search
+              ? item.name.toLowerCase().includes(searchParams.search.toLowerCase())
+              : item,
+          )
+          .map((item) => (
+            <Cards
+              id={item.id}
+              key={item.id}
+              title={item.name}
+              home={item.homeworld.name}
+              gender={item.gender}
+            />
+          ))}
       </div>
-
-      <div className={'grid grid-cols-5 gap-4 mt-4'}></div>
     </>
   )
 }
