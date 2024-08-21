@@ -1,10 +1,10 @@
 import { usePerson } from '@/app/store/store'
 import { UserHeader } from '@/components/user-header'
 
-export default async function Person({ params }) {
+export default async function Person({ params }: { params: { id: string } }) {
   const { fetchUser } = usePerson.getState()
   const data = await fetchUser(params.id)
-
+  console.log(params)
   if (data) {
     return (
       <>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useCards } from '@/app/store/store'
 import { Star } from '@/components/cards/ui/star'
 
-export const UserHeader: FC<{ id: string; star: boolean }> = ({ id, star = true }) => {
+export const UserHeader: FC<{ id: string; star?: boolean }> = ({ id, star = true }) => {
   const router = useRouter()
   const { addToFavorite, favorites } = useCards()
 

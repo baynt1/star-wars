@@ -2,7 +2,11 @@ import { Cards } from '@/components/cards'
 import { useCards } from '@/app/store/store'
 import { Header } from '@/components/header'
 
-export default async function Home({ searchParams }) {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { favorite?: string; search?: string }
+}) {
   const { fetchCards } = useCards.getState()
 
   const data = await fetchCards()
